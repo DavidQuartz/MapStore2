@@ -67,7 +67,12 @@ export const complexData = (data, mimeType, encoding) => `<wps:ComplexData${mime
  * @param {string} data data to wrap
  * @returns {string}
  */
-export const cdata = (data) => `<![CDATA[${data}]]>`;
+export const cdata = (data) => {
+    const regex = /\bCDATA\b/
+    const isCdataIncluded = regex.test(data);
+    if(isCdataIncluded) return data
+    return `<![CDATA[${data}]]>`
+};
 
 /**
  * Wrap XML in wps:ResponseForm
